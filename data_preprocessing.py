@@ -4,6 +4,7 @@ import numpy as np
 from scipy import stats
 import nltk
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
 import inflect
 
 
@@ -52,3 +53,24 @@ class cleaning():
         data_frame[column] = data_frame[column].apply(lambda row:
                                                       [convert.number_to_words(word)
                                                        if word.isdigit() else word for word in row])
+
+
+
+    def perform_stemming(self, data_frame, column):
+        """
+        This function perform stemming on given column
+        of dataframe
+
+        """
+        ps = PorterStemmer()
+        data_frame[column] = data_frame[column].apply(lambda row:
+                                                      [ps.stem(word) for word in row])
+
+
+
+    def perform_lemming(self, data_frame, column):
+        """
+        This function  perform lemming on the given of
+        a dataframe
+        """
+

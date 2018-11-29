@@ -4,6 +4,7 @@ import numpy as np
 from scipy import stats
 import nltk
 from nltk.corpus import stopwords
+import inflect
 
 
 warnings.filterwarnings("ignore")
@@ -39,3 +40,15 @@ class cleaning():
 
         data_frame[column] = data_frame[column].apply(lambda row: [item for item in row if item not in stop_words])
 
+
+    def replace_number(self, data_frame, column):
+        """
+        This function convert number in numeric form into textual
+        representation
+        """
+
+        convert = inflect.engine()
+
+        data_frame[column] = data_frame[column].apply(lambda row:
+                                                      [convert.number_to_words(word)
+                                                       if word.isdigit() else word for word in row])
